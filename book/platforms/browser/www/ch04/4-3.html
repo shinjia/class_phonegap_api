@@ -1,0 +1,34 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>index.html</title> 
+	<script type="text/javascript" charset="utf-8" src="../cordova.js" ></script>
+	<script type="text/javascript" charset="utf-8">	
+	var count=0;	
+	$( function() {
+		
+		document.addEventListener("deviceready", onDeviceReady, false);	
+	});
+	
+	function onDeviceReady()
+	{
+		console.log("here device ready");
+		document.addEventListener("backbutton",onBackButton,false);	
+	}
+	function onBackButton()
+	{
+		count++;
+		console.log("Trigger back button event "+ count+ " times");
+		alert("Trigger back button event "+ count+ " times");	
+		
+	}
+	
+	</script>
+</head> 
+<body>
+	<p>測試 BackButton</p>
+	<p>test deviceready & backbutton</p>
+</body>
+</html>

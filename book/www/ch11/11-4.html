@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>lawnchair demo</title>
+    <script src="../../cordova.js"></script>
+    <script src="../jquerymobile/jquery.js"></script>
+    <script src="lawnchair.js"></script>
+    <script src="lawnchair-query.js"></script>
+<script>
+var weiboStore = new Lawnchair(function(weiboStore) {
+    weiboStore.save({key: 1, message: "上周的小菊快枯萎了，买了新的康乃馨，坐等小菊死掉", author: "MichelleXing", date: "2012-03-01"});
+    weiboStore.save({key: 2, message: "好的程序员都懒，所以如果你发现你可以用以前的框架来实现现在的问题，恭喜你，你已经开始考虑重用很久了", author: "MichelleXing", date: "2012-03-01"});
+    weiboStore.save({key: 3, message: "恩，健康的心态很重要，哈。", author: "forever2009围脖", date: "2012-03-02"});
+    weiboStore.save({key: 4, message: "关键是乐观", author: "YanZhou_2011", date: "2012-03-03"});
+    weiboStore.save({key: 5, message: "这个逗猫棒不专业~", author: "disound", date: "2012-03-06"});
+	weiboStore.save({key: 6, message: "这完全没有抵抗力啊 太萌了", author: "disound", date: "2012-03-08"});
+    weiboStore.save({key: 7, message: "Top 10 external bugs of Flash Runtime in Feb 2012 ...", author: "disound", date: "2012-03-07"});
+    
+    weiboStore.where('record.author == "disound"', function(r) {
+        for (var i = 0; i < r.length; i++) {
+            console.log(r[i].message);
+        }
+    });
+    weiboStore.where('record.author == "disound"').desc("date", function(r) {
+        for (var i = 0; i < r.length; i++) {
+            console.log(r[i].message);
+        }
+    });
+});
+</script>
+</head>
+<body>
+
+<input type="button" id="load_button" value="Load" />
+</body>
+</html>

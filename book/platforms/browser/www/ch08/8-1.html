@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Compass實例</title>
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 等待Cordova載入
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova載入完成
+    function onDeviceReady() {
+        navigator.compass.getCurrentHeading(onSuccess, onError);
+    }
+
+    // onSuccess回調函數：傳回目前的指南針資料
+    function onSuccess(heading) {
+        alert('方向角度: ' + heading.magneticHeading);
+    }
+
+    // onError回調函數，傳回詳細的錯誤訊息
+    function onError(compassError) {
+        alert('Compass Error: ' + compassError.code);
+    }
+
+    </script>
+  </head>
+  <body>
+    <h1>指南針實例</h1>
+    <p>getCurrentHeading</p>
+  </body>
+</html>

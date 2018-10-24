@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>通知实例</title>
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // PhoneGap就绪
+    function onDeviceReady() {
+        Notification.prototype.activityStart = function(title, message) {
+            var _title = title || "Busy";
+            var _message = message || "Please wait...";
+            PhoneGap.exec(null, null, "Notification", "activityStart", [_title, _message]);
+        };
+    }
+
+    function alertDismissed() {
+        // 必要的处理
+    }
+
+    function showAlert() {
+        //navigator.notification.alert("游戏结束");
+        navigator.notification.alert("游戏结束", alertDismissed, "提示", "好的");
+    }
+    
+    function alertDismissed() {
+        // 必要的处理
+    }
+    
+    function showConfirm() {
+        navigator.notification.confirm("确认提交吗？", confirmDismissed, "提示", "确认,取消");
+    }
+    
+    function confirmDismissed(buttonIndex) {
+        if (buttonIndex == 1) { // 确认
+            // 必要的处理
+            navigator.notification.beep(3);
+            navigator.notification.vibrate(3000);
+        } else { // 取消
+            // 必要的处理
+            navigator.notification.alert("操作已取消");
+        }
+    }
+    
+    function showActivity() {
+        // navigator.notification.activityStart();
+        navigator.notification.activityStart("繁忙", "请稍等...");
+        setTimeout(activityCompleted, 3000); // 模拟长时操作
+    }
+    
+    function activityCompleted() {
+        navigator.notification.activityStop();
+    }
+    
+    var currentProgressValue = 0;
+    var intervalId = -1;
+    
+    function showProgress() {
+        navigator.notification.progressStart("提示", "數據處理中...");
+        intervalId = setInterval(progressJob, 50);
+    }
+    
+    function progressJob() {
+        // 处理数据
+        currentProgressValue++;
+        navigator.notification.progressValue(currentProgressValue);
+        if (currentProgressValue == 100) {
+        navigator.notification.progressStop();
+            clearInterval(intervalId);
+            currentProgressValue = 0;
+            intervalId = -1;
+        }
+    }
+    </script>
+  </head>
+  <body>
+    <p><a href="#" onclick="showAlert(); return false;">顯示提示對話框</a></p>
+    <p><a href="#" onclick="showConfirm(); return false;">顯示確認對話框</a></p>
+    <p><a href="#" onclick="showActivity(); return false;">顯示活動指示器</a></p>
+    <p><a href="#" onclick="showProgress(); return false;">顯示進度對話框</a></p>
+  </body>
+</html>

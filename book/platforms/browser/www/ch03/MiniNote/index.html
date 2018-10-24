@@ -1,0 +1,51 @@
+<!DOCTYPE HTML> 
+<html>
+    <head> 
+    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>PhoneGap 與 Dojo Mobile</title> 
+        <link rel="stylesheet" href="libs/dojo/dojox/mobile/themes/iphone/iphone.css" type="text/css">        
+		 <script src="libs/dojo/dojo/dojo.js" djConfig="parseOnLoad: true"></script> 
+		 <script type="text/javascript" charset="utf-8">
+		    dojo.require("dojox.mobile.parser");
+		    dojo.require("dojox.mobile");
+		    dojo.require("dojox.mobile.Button");
+		    dojo.require("dojox.mobile.TextArea");
+		    dojo.requireIf(!dojo.isWebKit, "dojox.mobile.compat");
+		 </script> 
+        <script type="text/javascript" charset="utf-8" src="../cordova.js"></script> 
+    </head> 
+     
+    <body> 
+        <div id="notelist" dojoType="dojox.mobile.View" selected="true"> 
+		    <h2 dojoType="dojox.mobile.Heading" label="筆記清單" fixed="top">
+		    	<div dojoType="dojox.mobile.ToolBarButton" label="設定" class="mblColorBlue" style="width:45px;float:right;"></div>
+		    </h2>
+		    <h2 dojoType="dojox.mobile.EdgeToEdgeCategory">2012-6-1</h2> 
+		    <ul dojoType="dojox.mobile.EdgeToEdgeList"> 
+		        <li dojoType="dojox.mobile.ListItem" moveTo="notedetail">筆記 1</li> 
+		        <li dojoType="dojox.mobile.ListItem">筆記 2</li> 
+		        <li dojoType="dojox.mobile.ListItem">筆記 3</li> 
+		    </ul> 
+		    <h2 dojoType="dojox.mobile.EdgeToEdgeCategory">2012-6-2</h2> 
+		    <ul dojoType="dojox.mobile.EdgeToEdgeList"> 
+		        <li dojoType="dojox.mobile.ListItem">筆記 1</li> 
+		        <li dojoType="dojox.mobile.ListItem">筆記 2</li> 
+		        <li dojoType="dojox.mobile.ListItem">筆記 3</li> 
+		    </ul> 
+		    <!-- <button dojoType="dojox.mobile.Button" class="baseBtn navyBtn" style="width:100%" fixed="bottom">寫筆記</button> -->
+		    <div dojoType="dojox.mobile.ToolBarButton" label="寫筆記" transition="slide" style="width:98%;" class="mblColorBlue" fixed="bottom" moveTo="addnote"></div>
+		 </div> 
+		 <div id="notedetail" dojoType="dojox.mobile.View"> 
+		 	<h1 dojoType="dojox.mobile.Heading"	back="傳回" moveTo="notelist">筆記內容</h1>
+		 	<div data-dojo-type="dojox.mobile.RoundRect">
+			  今天的天氣不錯
+			</div>
+		 </div>
+		 <div id="addnote" dojoType="dojox.mobile.View"> 
+		 	<h1 dojoType="dojox.mobile.Heading" label="加入筆記" back="取消" moveTo="notelist">
+		 		<div dojoType="dojox.mobile.ToolBarButton" label="儲存" class="mblColorBlue" style="width:45px;float:right;"></div>
+		 	</h1>
+		 	<textarea dojoType="dojox.mobile.TextArea" style="width:98%;" name="content"></textarea>
+		 </div> 
+    </body> 
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>檔案API範例</title>
+<script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+<script type="text/javascript" charset="utf-8" src="../jquerymobile/jquery.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 
+2 * 1024 * 1024 /*2MB*/, gotFileSystem, errorHandler);
+    }
+
+    function gotFileSystem(fileSystem) { // 參數型態是FileSystem
+        $("#fileSystemInfo").html("請求的檔案系統名字: " + fileSystem.name);
+        $("#fileSystemRootInfo").html("根目錄: " + fileSystem.root.name);
+    }
+
+    function errorHandler(e) {
+        var msg = '';
+        switch (e.code) {
+        case FileError.NOT_FOUND_ERR:
+            msg = "NOT_FOUND_ERR";
+           break;
+        case FileError.SECURITY_ERR:
+            msg = "SECURITY_ERR";
+            break;
+        case FileError.ABORT_ERR:
+            msg = "ABORT_ERR";
+            break;
+        case FileError.NOT_READABLE_ERR:
+            msg = "NOT_READABLE_ERR";
+            break;
+        case FileError.ENCODING_ERR:
+            msg = "ENCODING_ERR";
+            break;
+        case FileError.NO_MODIFICATION_ALLOWED_ERR:
+            msg = "NO_MODIFICATION_ALLOWED_ERR";
+            break;
+        case FileError.INVALID_STATE_ERR:
+            msg = "INVALID_STATE_ERR";
+            break;
+        case FileError.SYNTAX_ERR:
+            msg = "SYNTAX_ERR";
+            break;
+        case FileError.INVALID_MODIFICATION_ERR:
+            msg = "INVALID_MODIFICATION_ERR";
+            break;
+        case FileError.QUOTA_EXCEEDED_ERR:
+            msg = "QUOTA_EXCEEDED_ERR";
+            break;
+        case FileError.TYPE_MISMATCH_ERR:
+            msg = "TYPE_MISMATCH_ERR";
+            break;
+        case FileError.PATH_EXISTS_ERR:
+            msg = "PATH_EXISTS_ERR";
+            break;
+        default:
+            msg = '不詳錯誤';
+            break;
+        };
+        navigator.notification.alert('錯誤: ' + msg);
+      }
+</script>
+</head>
+<body>
+  <h2>請求檔案系統!</h2>
+  <p id="fileSystemInfo"></p>
+  <p id="fileSystemRootInfo"></p>
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Web SQL Demo</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <script src="../../cordova.js"></script>
+        <script src="../jquerymobile/jquery.js"></script>
+        <script>
+        function openDB() {
+            var db = openDatabase(
+                    "body_building_db",             // 数据库的短名字
+                    "1.0",                          // 数据库的版本
+                    "Database for body building",   // 数据库的长名字
+                    1024*1024                       // 允许的最大尺寸（字节为单位）
+                );
+            return db;
+        }
+
+        function createBodyBuildingTable(db) {
+            var sql = "CREATE TABLE IF NOT EXISTS body_building (id INTEGER PRIMARY KEY AUTOINCREMENT, note TEXT, date DATE);";
+            db.transaction(function (tx) {
+                tx.executeSql(
+                    sql,  // 要执行的SQL语句
+                    [],   // SQL语句的参数列表 
+                    function () { // 成功的回调函数
+                        // 插入样本数据
+                        record = {note: "今天练了两个小时", date: new Date(2012, 2, 1)};
+                        insertRecord(db, record);
+                        record = {note: "今天重点练习了腰部", date: new Date(2012, 2, 4)};
+                        insertRecord(db, record);
+                        record = {note: "手臂练得好疼", date: new Date(2012, 2, 7)};
+                        insertRecord(db, record);
+                        record = {note: "洗完澡，称了一下，增重了，呵呵", date: new Date(2012, 2, 11)};
+                        insertRecord(db, record);
+                    },
+                    statementErrorCallback // 语句执行失败的回调函数
+                );
+                console.log("Execute sql...");
+              }, transactionErrorCallback  // 事务创建失败的回调函数
+            );
+            console.log("create table...");
+        }
+
+        function transactionErrorCallback(error) {
+            alert("Error: " + error.message);
+        }
+
+        function statementErrorCallback(transaction, error) {
+            alert("Error: " + error.message);
+        }
+
+        function insertRecord(db, bodyBuildingRecord) {
+            var sql = "INSERT INTO body_building (note, date) VALUES (?,?);"
+            db.transaction(function (tx) {
+                tx.executeSql(
+                    sql,
+                    [bodyBuildingRecord.note, bodyBuildingRecord.date], // SQL语句的参数列表
+                    function() {
+                        console.log('success');
+                    },
+                    statementErrorCallback
+                );
+            });
+        }
+
+        function getRecords(db) {
+            var sql = "SELECT * FROM body_building;";
+            db.transaction(function (tx) {
+                tx.executeSql(
+                    sql,
+                    [], // SQL语句的参数列表
+                    function(transaction, resultSet) {
+                        var rows = resultSet.rows;
+                        for (var i = 0; i < rows.length; i++) {
+                            // 每条记录显示为一个列表项
+                            $("#body_building").append('<li>'+ rows.item(i).note + ' ' + '</li>');
+                        }
+                    },
+                    statementErrorCallback
+                );
+            });
+        }
+        
+        // 应用入口点
+        document.addEventListener("deviceready", function() {
+            var db = openDB();
+            createBodyBuildingTable(db);
+            $("#load_button").click(function() {
+                // 获取数据并更新页面
+                getRecords(db);
+            });
+        });
+        </script>
+    </head>
+    <body>
+        <h1>Web SQL演示</h1>
+        <input type="button" id="load_button" value="加载" />
+        <ul id="body_building"></ul>
+    </body>
+</html>

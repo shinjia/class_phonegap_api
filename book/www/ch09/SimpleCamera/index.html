@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Camera Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../../cordova.js"></script>  
+   	<link rel="stylesheet" href="jquerymobile/jquery.mobile-1.1.0.css" />
+	<script src="jquerymobile/jquery.js"></script>
+	<script src="jquerymobile/jquery.mobile-1.1.0.js"></script>
+	<style >
+	.imageContainer
+	{
+		width: 288px; 
+		height: 288px; 
+		position: relative; 
+		background-color: #fbfbfb; 
+		border: 1px solid #b8b8b8;
+	}
+	 #myImage
+	 {
+	 	width: 288px; 
+		height: 288px;
+	    	display:block;
+	  }
+</style>
+
+   	<script type="text/javascript" charset="utf-8"> 
+   	
+   	$(document).ready(function(){
+   		
+   		document.addEventListener("deviceready",onDeviceReady,false);
+   	
+   	});
+   	function onDeviceReady()
+   	{
+   		console.log("deviceReady");
+   		$( ".captureBtn" ).bind( "click", function(event, ui) {
+   			getPictureFromCamera();
+  
+  
+		}); 
+		$( ".browserBtn" ).bind( "click", function(event, ui) {
+			getPictureFromePhotoLibrary();
+  
+		});
+   	}
+   	
+   	function getPictureFromCamera()
+   	{
+   		navigator.camera.getPicture(onSuccess, onFail, { quality: 50,destinationType: Camera.DestinationType.DATA_URL,sourceType:navigator.camera.PictureSourceType.CAMERA }); 
+
+    }
+    
+    function onSuccess(imageData) {
+    	var image = document.getElementById('myImage');
+    	image.src = "data:image/jpeg;base64," + imageData;
+	}
+
+	function onFail(message) {
+   	 alert('Failed because: ' + message);
+	}
+   		
+   	
+   
+   	function getPictureFromePhotoLibrary()
+{ 
+   	navigator.camera.getPicture(onSuccessFromLib, onFail, { allowEdit:true,quality: 90,destinationType:Camera.DestinationType.FILE_URI ,sourceType:navigator.camera.PictureSourceType.PHOTOLIBRARY,targetHeight:288,targetWidth:288 });  	
+	function onSuccessFromLib(imageURI) 
+	{
+   	 	alert("imageURI"+imageURI);
+		var image = document.getElementById('myImage');
+   	 	image.src = imageURI;
+	}   	
+}
+
+    </script>
+    
+    </head>
+    <body>
+     	<div data-role=page>
+     		<div data-role=content>
+     			<a data-role="button" data-transition="fade" class="captureBtn" >拍照 </a>
+                <a data-role="button" data-transition="fade" class="browserBtn">瀏覽 </a>
+                <div class="imageContainer">
+                    <img id="myImage"   />
+                </div>
+     		</div>     		
+     	</div>
+    </body>
+</html>

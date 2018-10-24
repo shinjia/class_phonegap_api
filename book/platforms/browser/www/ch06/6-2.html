@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Acceleration 實例</title>
+
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 目前watchAcceleration的參考ID
+    var watchID = null;
+
+    // 等待PhoneGap載入
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+// 載入完成
+    function onDeviceReady() {
+        startWatch();
+    }
+
+    // 開始監測
+    function startWatch() {
+
+        // 每隔三秒更新一次資訊
+        var options = { frequency: 3000 };
+
+        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+    }
+
+    // 停止監測
+    function stopWatch() {
+        if (watchID) {
+            navigator.accelerometer.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+
+    // 取得加速度資訊成功後的回呼函數
+    // 接收包含目前加速度資訊的Acceleration物件
+    function onSuccess(acceleration) {
+        var element = document.getElementById('accelerometer');
+        element.innerHTML = 'X軸方向的加速度: ' + acceleration.x + '<br />' +
+                            'Y軸方向的加速度: ' + acceleration.y + '<br />' +
+                            'Z軸方向的加速度: ' + acceleration.z + '<br />' + 
+                            '時間戳記: '      + acceleration.timestamp + '<br />';
+    }
+
+    // 取得加速度資訊失敗後的回呼函數
+    function onError() {
+        alert('onError!');
+    }
+
+    </script>
+  </head>
+  <body>
+    <div id="accelerometer">監測加速度資訊中...</div>
+    <button onclick="stopWatch();">停止監測加速度資訊</button>
+  </body>
+</html>

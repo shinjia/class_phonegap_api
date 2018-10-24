@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Compass 實例</title>
+    <style type="text/css">
+	<!--
+	#main {
+ 		position:absolute;
+ 		top:50px;
+ 		z-index:1;
+	}
+	#northDiv {
+ 		position:absolute; 
+ 		z-index:2;
+	}
+	-->
+	</style>
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 目前`watchHeading`的參考
+    var watchID = null;
+
+    // 等待Cordova載入
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova 載入完成
+    function onDeviceReady() {
+        startWatch();
+    }
+
+    // 開始對指南針裝置的監控
+    function startWatch() {
+
+        // 每隔三秒更新一次資料
+        var options = { frequency: 100 };
+
+        watchID = navigator.compass.watchHeading(onSuccess, onError, options);
+    }
+
+    // 停止對指南針裝置的監控
+    function stopWatch() {
+        if (watchID) {
+            navigator.compass.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+
+    // onSuccess回調函數：傳回指南針的目前方向
+    function onSuccess(heading) {
+        var element = document.getElementById('heading');
+        var x = heading.magneticHeading;
+        element.innerHTML = '指南針方向（角度）: ' + x;
+        document.getElementById('northDiv').style.webkitTransform = 'rotate('+x+"deg)";
+    }
+
+    // onError回調函數：傳回詳細的錯誤訊息
+    function onError(compassError) {
+        alert('錯誤訊息: ' + compassError.code);
+    }
+
+
+    </script>
+  </head>
+  <body align='center'>
+    <div id="heading">監測指南針訊息中...</div>
+    <div id='main'>
+	  <div id="northDiv"><img src="north.png" width="256" height="256" /></div>
+	</div>  
+  </body>
+</html>

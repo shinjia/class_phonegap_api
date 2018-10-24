@@ -1,0 +1,82 @@
+DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Acceleration 實例</title>
+<style type="text/css">
+	#ball {
+    position: absolute;
+    z-index: 0;
+    left: 20px;
+    top: 100px;
+    background: #f00;
+}
+</style>
+<script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    var watchID = null;
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+	function drawCircle(x,y) {
+	    var ctx = document.getElementById("ball").getContext('2d');
+	    var rd = 10;
+	    ctx.beginPath();
+	    ctx.arc(x, y, rd, 0, Math.PI * 2, false);
+	    ctx.closePath();
+	    ctx.fillStyle = "yellow";
+	    ctx.fill();
+	}
+	
+	function clear() {
+	    var ctx = document.getElementById("ball").getContext('2d');
+	    ctx.clearRect(0,0,200,200);
+	}
+
+    function onDeviceReady() {
+    	drawCircle(10,10);
+        startWatch();
+    }
+
+
+    function startWatch() {
+        var options = { frequency: 40 };
+
+        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+    }
+
+    function stopWatch() {
+        if (watchID) {
+            navigator.accelerometer.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+
+	var oldX = 10, oldY = 10;
+    // 取得加速度訊息成功後的回調函數
+    function onSuccess(newValue) {
+	    if(10<=oldX<180&&10<=oldY<180){
+			clear();
+			drawCircle(oldX,oldY);
+		}
+		oldX -= newValue.x;
+		oldY += newValue.y;
+        var element = document.getElementById('accelerometer');
+        element.innerHTML = 'X: ' + oldX + '<br />' +
+                            'Y: ' + oldY + '<br />';
+    }
+
+    // 取得加速度訊息失敗後的回調函數
+    function onError() {
+        alert('onError!');
+    }
+
+    </script>
+  </head>
+  <body>
+    <div id="accelerometer">開啟重力感應...</div>
+    <button onclick="stopWatch();">停止重力感應</button>
+    <canvas id="ball" width="200" height="200"></canvas>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>SimpleCapture</title>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+	<meta charset=utf-8"utf-8">
+	<script type="text/javascript" charset="utf-8" src="../../cordova.js"></script>
+        <link rel="stylesheet" href="jquerymobile/jquery.mobile-1.1.0.css" />
+        <script src="jquerymobile/jquery.js"></script>
+        <script src="jquerymobile/jquery.mobile-1.1.0.js"></script>
+        <style>
+            #supportedMode{
+                width: 288px; height: 100px;position:relative;border:1px solid #b8b8b8;
+            }
+            #message{
+                width: 288px; height: 100px;position:relative;border:1px solid #b8b8b8;
+            }
+            #audiocontainer{
+                width: 288px; height: 300px; position:relative;border:1px solid #b8b8b8;
+            }
+            </style>
+        <script type="text/javascript" charset="utf-8">
+            
+            var media;
+            var src="flexible.wav";
+            $(document).ready(function(){
+                              
+                              document.addEventListener("deviceready",onDeviceReady,false); 
+                              
+                              });
+            function onDeviceReady(){
+                alert("device ready");
+                $(".startRecordBtn").bind("click",function(event, ui){	 	
+                                           startRecord();
+                                           });
+                $(".endRecordBtn").bind("click",function(event, ui){	 	
+                                          endRecord();
+                                          });
+                $(".playBtn").bind("click",function(event, ui){	 	
+                                          playRecord();
+                                          });
+                $(".pauseBtn").bind("click",function(event, ui){	 	
+                                          pauseRecord();
+                                          });
+                $(".continueBtn").bind("click",function(event, ui){	 	
+                                          continueRecord();
+                                          });
+                $(".stopBtn").bind("click",function(event, ui){	 	
+                                          stopPlaying();
+                                          });
+                
+                
+            }
+            
+            function startRecord(){
+                
+                media = new Media(src,onSuccess,onError);
+                console.log(media);
+                media.startRecord();            
+            }
+            function onSuccess()
+            {
+                alert("enter on success");
+                console.log("enter on success");
+            }
+            function onError(error)
+            {
+                alert("code:"+error.code +"message:"+error.message);
+            
+            }
+            function endRecord()
+            {
+                if (media != null)
+                {
+                    media.stopRecord();
+                }
+            }
+            
+            function playRecord(){
+                if (media!=null)
+                {
+                    media.play();
+                }
+            }
+            
+            function pauseRecord(){
+                if (media!=null)
+                {
+                    media.pause();
+                }
+            
+            }
+            function continueRecord(){}
+            function stopPlaying(){
+                if (media!=null)
+                {
+                    media.stop();
+                    meida.release();
+                }
+            }
+            
+                       
+            </script>
+        </head>
+    <body>
+        <div data-role="page">
+            <div data-role="content" >
+                <a data-role="button" class="startRecordBtn" >Start recording</a> 
+                 <a data-role="button" class="endRecordBtn" >End recording</a> 
+                 <a data-role="button" class="playBtn" >Play </a> 
+                 <a data-role="button" class="pauseBtn" >Pause </a> 
+                <a data-role="button" class="continueBtn" >Continue </a> 
+                <a data-role="button" class="stopBtn" >Stop </a> 
+                
+                <div id="audiocontainer" />
+                <div id="message" />
+                
+            </div>
+            <div data-role="footer" />
+        </div>
+    </body>
+</html>

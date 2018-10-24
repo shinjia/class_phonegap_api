@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Contact Example</title> 
+	<script type="text/javascript" src="../../cordova.js"></script>	
+
+	<link rel="stylesheet"  href="jquerymobile/jquery.mobile-1.0.1.min.css" />	
+	<script type="text/javascript" src="jquerymobile/jquery.js"></script>
+	<script type="text/javascript" src="jquerymobile/jquery.mobile-1.0.1.min.js"></script>
+	<link rel="stylesheet"  href="css/app.css" />
+	<script type="text/javascript" src="js/app.js"></script>
+</head> 
+<body> 
+	<div data-role="page" >
+		<div data-role="header"  >
+			<h1>通信錄</h1>
+		</div>
+		<div data-role="content">		
+			<ul data-role="listview" data-filter="true" data-split-icon="gear" id="contactlistdiv" >				
+			</ul>
+		</div>
+		<div data-role="footer" >				
+		</div>
+	</div>
+	<div data-role="page" id="contactdetail" data-add-back-btn=true  >
+		<div data-role="header"  >
+			<h1>詳細訊息</h1>
+		</div>
+		<div id="detailconttent" data-role="content">
+			<div class="content-primary">	
+			<ul data-role="listview" data-dividertheme="d">
+				<li data-role="list-divider">name</li>
+				<li id="contactnamestr"></li>
+				<li data-role="list-divider">Phone</li>
+				<li id="contactphonetr">content</li>
+				<li data-role="list-divider">Email</li>
+				<li id="contactemailstr">content</li>
+				<li data-role="list-divider">IM</li>
+				<li id="contactimstr">content</li>
+				<li data-role="list-divider">Organization</li>
+				<li id="contactorganizationstr">content</li>
+				<li data-role="list-divider">Address</li>
+				<li id="contactaddstr">content</li>
+				<li data-role="list-divider">Group</li>
+				<li id="contactgroupstr">content</li>
+			</ul>
+			</div>
+		</div>
+		<div data-role="footer" >
+		</div>
+	</div>
+	<div data-role="page" id="actionlist" data-add-back-btn=true  >
+		<div data-role="header" >
+			<h1></h1>
+		</div>
+		<div data-role="content"   >
+			<div data-role="controlgroup" data-type="horizontal" id="controlgroupdiv" > 
+			</div>
+		</div>		
+	</div>
+</body>
+</html>

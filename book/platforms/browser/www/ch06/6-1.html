@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Acceleration 實例</title>
+
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // 等待PhoneGap載入
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // 載入完成
+    function onDeviceReady() {
+        navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
+    }
+
+    // 取得加速度資訊成功後的回呼函數
+    // 接收包含目前加速度資訊的Acceleration物件
+    function onSuccess(acceleration) {
+        alert('X軸方向的加速度: ' + acceleration.x + '\n' +
+              'Y軸方向的加速度: ' + acceleration.y + '\n' +
+              'Z軸方向的加速度: ' + acceleration.z + '\n' +
+              '時間戳記: '      + acceleration.timestamp + '\n');
+    }
+
+    // 取得加速度資訊失敗後的回呼函數
+    function onError() {
+        alert('出錯了!');
+    }
+
+    </script>
+  </head>
+  <body>
+    <h1>實例</h1>
+    <p>取得目前的加速度資訊</p>
+  </body>
+</html>

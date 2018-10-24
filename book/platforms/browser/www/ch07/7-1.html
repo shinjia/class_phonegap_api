@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title> Geolocation實例</title>
+    <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    //等待PhoneGap載入
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    //載入完成
+    function onDeviceReady() {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+
+    // onSuccess 回調函數
+    //  接收包括目前地理位置座標訊息的Position物件
+    function onSuccess(position) {
+        var element = document.getElementById('geolocation');
+        element.innerHTML = '緯度: '     + position.coords.latitude      + '<br />' +
+                            '經度: '     + position.coords.longitude     + '<br />' +
+                            '海拔高度: ' + position.coords.altitude     + '<br />' +
+                            '精確度: '   + position.coords.accuracy     + '<br />' +
+                            '海拔高度精確度: ' + position.coords.altitudeAccuracy     + '<br />' +
+                            '運動方向: ' + position.coords.heading     + '<br />' +
+                            '速度: '     + position.coords.speed     + '<br />' +
+                            '<hr />' + element.innerHTML;
+    }
+
+    // onError 回調函數， 接收包括實際錯誤訊息的PositionError 物件
+    function onError(error) {
+      alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');
+    }
+
+    </script>
+  </head>
+  <body>
+    <p id="geolocation">定位中。。。</p>
+  </body>
+</html>
